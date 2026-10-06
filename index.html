@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lucas Prado Personal | Treino que cabe na sua rotina</title>
+<meta name="description" content="Treino personalizado online e presencial. Calcule seu IMC, escolha um plano e agende sua aula experimental grátis pelo WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--cobalto:#2340F5;--tinta:#0B1220;--sol:#FFB400;--fundo:#F4F5F8;--cinza:#5B6477;--linha:#DCE0E8;--verde:#1F8A5B}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Figtree',system-ui,sans-serif;background:var(--fundo);color:var(--tinta);line-height:1.6;font-size:1.05rem}
+h1,h2,h3{font-family:'Syne',system-ui,sans-serif;font-weight:800;line-height:1.05;margin:0}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+section{padding:72px 0;scroll-margin-top:12px}
+h2{font-size:clamp(1.9rem,4vw,2.7rem);margin-bottom:12px}
+.sub{color:var(--cinza);margin:0 0 36px;max-width:52ch}
+:focus-visible{outline:3px solid var(--sol);outline-offset:3px}
+.btn{display:inline-block;background:var(--sol);color:var(--tinta);font:700 1rem 'Figtree',sans-serif;padding:14px 26px;border-radius:10px;text-decoration:none;border:0;cursor:pointer;text-align:center}
+.btn:hover{background:#FFC533}
+.btn.escuro{background:var(--tinta);color:#fff}
+.btn.escuro:hover{background:#000}
+.btn.vazado{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.55)}
+.btn.vazado:hover{border-color:var(--sol);color:var(--sol)}
+
+.aviso{background:var(--tinta);color:#fff;text-align:center;padding:9px 16px;font-size:.94rem}
+.aviso b{color:var(--sol)}
+.hero{background:var(--cobalto);color:#fff;padding:64px 0 76px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:48px;align-items:center}
+.hero h1{font-size:clamp(2.6rem,6.5vw,4.6rem);letter-spacing:-.02em}
+.hero p{font-size:1.2rem;color:#D7DDFF;max-width:36ch;margin:20px 0 28px}
+.acoes{display:flex;gap:12px;flex-wrap:wrap}
+.prova{margin-top:26px;color:#C4CCFF;font-size:.95rem}
+.prova b{color:#fff}
+
+.calc{background:#fff;color:var(--tinta);border-radius:18px;padding:28px;box-shadow:0 20px 50px rgba(5,15,90,.35)}
+.calc h2{font-size:1.6rem;margin-bottom:4px}
+.calc>p{color:var(--cinza);margin:0 0 16px;font-size:.98rem;max-width:none}
+.campos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:end}
+label{display:flex;flex-direction:column;gap:5px;font-weight:600;font-size:.92rem}
+input{width:100%;min-width:0;font:500 1.05rem 'Figtree',sans-serif;padding:12px;border:1.5px solid var(--linha);border-radius:10px;background:var(--fundo);color:var(--tinta)}
+.calc .btn{width:100%;margin-top:14px}
+#resultado{margin-top:18px}
+.valor{font:800 2.4rem 'Syne',sans-serif;line-height:1}
+.valor small{font:600 1rem 'Figtree',sans-serif;color:var(--cinza)}
+.escala{position:relative;display:flex;height:10px;border-radius:99px;margin:18px 0 6px}
+.escala i{display:block;height:100%}
+.escala i:nth-child(1){width:14%;background:#7FA8FF;border-radius:99px 0 0 99px}
+.escala i:nth-child(2){width:26%;background:#3DBE7C}
+.escala i:nth-child(3){width:20%;background:#FFB400}
+.escala i:nth-child(4){width:40%;background:#FF6B4A;border-radius:0 99px 99px 0}
+#marca{position:absolute;top:-5px;width:4px;height:20px;background:var(--tinta);border-radius:2px;left:0;transform:translateX(-50%)}
+.hero .nota{font-size:.85rem;color:var(--cinza);margin:12px 0 0;max-width:none}
+#erro{color:#C0392B;font-weight:600;font-size:.92rem;margin:10px 0 0;min-height:1.3em}
+
+.planos{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.plano{background:#fff;border:1px solid var(--linha);border-radius:16px;padding:32px 28px;display:flex;flex-direction:column;position:relative}
+.plano.destaque{border:2px solid var(--cobalto);box-shadow:0 16px 40px rgba(35,64,245,.16)}
+.selo{position:absolute;top:-13px;left:24px;background:var(--cobalto);color:#fff;font-weight:700;font-size:.85rem;padding:4px 14px;border-radius:99px}
+.plano h3{font-size:1.45rem}
+.preco{font:800 2.3rem 'Syne',sans-serif;margin:14px 0 2px}
+.preco small{font:500 1rem 'Figtree',sans-serif;color:var(--cinza)}
+.de{margin:0;color:var(--cinza);text-decoration:line-through;font-size:.93rem}
+.eco{margin:0;color:var(--verde);font-weight:700;font-size:.93rem}
+.plano ul{padding-left:18px;margin:16px 0 24px;color:var(--cinza)}
+.plano .btn{margin-top:auto}
+
+.passos{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.passos div{border-top:3px solid var(--cobalto);padding-top:16px}
+.passos h3{font-size:1.25rem;margin-bottom:6px}
+.passos p{margin:0;color:var(--cinza)}
+.escuro{background:var(--tinta);color:#fff}
+.escuro .sub{color:#A5AFC4}
+.falas{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+blockquote{margin:0;padding-left:18px;border-left:3px solid var(--sol)}
+blockquote p{margin:0 0 10px;font-size:1.08rem}
+blockquote cite{font-style:normal;color:#A5AFC4;font-size:.93rem}
+.garantia{background:var(--sol);padding:26px 0;text-align:center;font-size:1.12rem}
+
+details{border-bottom:1px solid var(--linha);padding:16px 0;max-width:720px}
+summary{cursor:pointer;font-weight:700}
+details p{margin:10px 0 0;color:var(--cinza)}
+.final{background:var(--cobalto);color:#fff;text-align:center}
+.final p{color:#D7DDFF;margin:0 auto 24px;max-width:44ch}
+footer{background:var(--tinta);color:#A5AFC4;padding:34px 0 100px;font-size:.93rem}
+footer p{margin:4px 0}
+.fixa{display:none}
+@media(max-width:800px){
+section{padding:52px 0}
+.hero{padding:44px 0 56px}
+.hero .wrap,.planos,.passos,.falas{grid-template-columns:minmax(0,1fr);gap:28px}
+.calc{padding:22px 18px}
+.calc .btn{white-space:normal}
+.fixa{display:flex;gap:8px;position:fixed;left:0;right:0;bottom:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--tinta);z-index:10}
+.fixa .btn{flex:1;padding:13px 8px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="aviso">Aula experimental <b>grátis</b> para novos alunos. Restam <b>3 vagas</b> este mês.</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Treino que cabe na sua rotina.</h1>
+      <p>Plano feito para o seu objetivo e o seu tempo, com acompanhamento de perto, online ou presencial.</p>
+      <div class="acoes">
+        <a class="btn" data-wa="Olá, Lucas! Quero agendar minha aula experimental grátis." href="#" target="_blank" rel="noopener">Agendar aula grátis</a>
+        <a class="btn vazado" href="#planos">Ver planos</a>
+      </div>
+      <p class="prova"><b>4,9 de 5</b> em mais de 180 avaliações · treinos para iniciantes e experientes</p>
+    </div>
+
+    <div class="calc">
+      <h2>Calcule seu IMC</h2>
+      <p>Leva 10 segundos e é um bom ponto de partida para a conversa.</p>
+      <form id="formImc" novalidate>
+        <div class="campos">
+          <label>Peso (kg)<input id="peso" type="text" inputmode="decimal" placeholder="70"></label>
+          <label>Altura<input id="altura" type="text" inputmode="decimal" placeholder="1,70 ou 170"></label>
+        </div>
+        <p id="erro" role="status"></p>
+        <button class="btn escuro" type="submit">Calcular</button>
+      </form>
+      <div id="resultado" hidden>
+        <div class="valor"><span id="imc">0</span> <small id="faixa"></small></div>
+        <div class="escala" aria-hidden="true"><i></i><i></i><i></i><i></i><span id="marca"></span></div>
+        <a class="btn" id="zapImc" href="#" target="_blank" rel="noopener">Montar meu treino com o Lucas</a>
+        <p class="nota">O IMC é só uma referência: não mede massa muscular nem substitui avaliação profissional.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="planos">
+    <div class="wrap">
+      <h2>Escolha seu plano</h2>
+      <p class="sub">Todos incluem treino montado para você e ajustes conforme sua evolução.</p>
+      <div class="planos">
+        <article class="plano">
+          <h3>Online</h3>
+          <p class="preco">R$ 149 <small>/mês</small></p>
+          <ul><li>Treino personalizado no celular</li><li>Ajuste todo mês</li><li>Suporte pelo WhatsApp</li></ul>
+          <a class="btn escuro" data-wa="Olá, Lucas! Quero saber mais sobre o plano Online." href="#" target="_blank" rel="noopener">Quero este plano</a>
+        </article>
+        <article class="plano destaque">
+          <span class="selo">Mais escolhido</span>
+          <h3>Presencial 2x</h3>
+          <p class="de">De R$ 400</p>
+          <p class="preco">R$ 360 <small>/mês</small></p>
+          <p class="eco">Você economiza R$ 40</p>
+          <ul><li>2 treinos por semana com acompanhamento</li><li>Avaliação inicial completa</li><li>Treino extra online incluso</li></ul>
+          <a class="btn" data-wa="Olá, Lucas! Quero saber mais sobre o plano Presencial 2x." href="#" target="_blank" rel="noopener">Quero este plano</a>
+        </article>
+        <article class="plano">
+          <h3>Presencial 3x</h3>
+          <p class="preco">R$ 480 <small>/mês</small></p>
+          <ul><li>3 treinos por semana</li><li>Acompanhamento de perto</li><li>Prioridade na agenda</li></ul>
+          <a class="btn escuro" data-wa="Olá, Lucas! Quero saber mais sobre o plano Presencial 3x." href="#" target="_blank" rel="noopener">Quero este plano</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="garantia"><strong>Primeira aula grátis e sem compromisso.</strong> Se não for para você, é só avisar.</div>
+
+  <section>
+    <div class="wrap">
+      <h2>Como funciona</h2>
+      <p class="sub">Do primeiro contato ao treino em três passos.</p>
+      <div class="passos">
+        <div><h3>1. Aula experimental</h3><p>Você conhece o método e conta seu objetivo, sem pagar nada.</p></div>
+        <div><h3>2. Plano sob medida</h3><p>Eu monto o treino pensando na sua rotina, nível e disponibilidade.</p></div>
+        <div><h3>3. Acompanhamento</h3><p>Ajusto o treino conforme você evolui e tiro suas dúvidas pelo WhatsApp.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="escuro">
+    <div class="wrap">
+      <h2>Quem treina, continua</h2>
+      <p class="sub">O que os alunos contam depois de alguns meses.</p>
+      <div class="falas">
+        <blockquote><p>Eu desistia de academia em um mês. Com treino na minha rotina, já estou há oito meses sem faltar.</p><cite>Camila R., plano Presencial 2x</cite></blockquote>
+        <blockquote><p>Treino online funcionou porque cabe no meu horário de trabalho. Os ajustes todo mês fazem diferença.</p><cite>André T., plano Online</cite></blockquote>
+        <blockquote><p>Comecei sem saber nem pegar nos pesos. Hoje treino com segurança e confiança.</p><cite>Paula S., plano Presencial 3x</cite></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Perguntas frequentes</h2>
+      <p class="sub"></p>
+      <details><summary>Preciso ter experiência para começar?</summary><p>Não. O treino é montado para o seu nível, inclusive para quem nunca treinou.</p></details>
+      <details><summary>Posso treinar em casa?</summary><p>Sim. No plano Online o treino é adaptado ao equipamento que você tiver.</p></details>
+      <details><summary>Como funciona o pagamento?</summary><p>Mensal, por Pix ou cartão. Você só paga depois da aula experimental.</p></details>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <h2>Vamos começar?</h2>
+      <p>Garanta uma das vagas deste mês e agende sua aula experimental grátis.</p>
+      <a class="btn" data-wa="Olá, Lucas! Quero agendar minha aula experimental grátis." href="#" target="_blank" rel="noopener">Agendar aula grátis</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong style="color:#fff">Lucas Prado Personal</strong> · Treino online e presencial</p>
+    <p>Projeto fictício criado para portfólio. Avaliações, vagas e preços são demonstrativos.</p>
+  </div>
+</footer>
+
+<div class="fixa">
+  <a class="btn" data-wa="Olá, Lucas! Quero agendar minha aula experimental grátis." href="#" target="_blank" rel="noopener">Aula grátis</a>
+  <a class="btn vazado" href="#planos">Ver planos</a>
+</div>
+
+<script>
+// Troque pelo seu número (DDI + DDD + número, só dígitos)
+const WHATSAPP = "5511999999999";
+const wa = (t) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(t)}`;
+document.querySelectorAll("[data-wa]").forEach((a) => (a.href = wa(a.dataset.wa)));
+
+const num = (s) => parseFloat(String(s).replace(",", "."));
+const $ = (id) => document.getElementById(id);
+
+$("formImc").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const peso = num($("peso").value);
+  const bruto = num($("altura").value);
+  const altura = bruto < 3 ? bruto : bruto / 100; // aceita 1,70 (metros) ou 170 (cm)
+  if (!(peso >= 20 && peso <= 300) || !(altura >= 1 && altura <= 2.5)) {
+    $("erro").textContent = "Informe o peso em kg (ex: 70) e a altura (ex: 170 ou 1,70).";
+    $("resultado").hidden = true;
+    return;
+  }
+  $("erro").textContent = "";
+  const imc = peso / (altura * altura);
+  const faixa = imc < 18.5 ? "Abaixo do peso" : imc < 25 ? "Peso adequado" : imc < 30 ? "Sobrepeso" : "Obesidade";
+  const pos = (Math.min(Math.max(imc, 15), 40) - 15) / 25 * 100;
+
+  $("imc").textContent = imc.toFixed(1).replace(".", ",");
+  $("faixa").textContent = faixa;
+  $("marca").style.left = pos + "%";
+  $("zapImc").href = wa(`Olá, Lucas! Calculei meu IMC no seu site (${imc.toFixed(1).replace(".", ",")}) e quero montar meu treino.`);
+  $("resultado").hidden = false;
+  $("resultado").scrollIntoView({ behavior: "smooth", block: "center" });
+});
+</script>
+</body>
+</html>
